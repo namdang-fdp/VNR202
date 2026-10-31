@@ -1,0 +1,16 @@
+services:
+  vnr202:
+    image: ${DOCKERHUB_USERNAME}/vnr202:latest
+    container_name: vnr202
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+    volumes:
+      - vnr202_data:/app/.data
+    networks:
+      - selfhost_net
+networks:
+  selfhost_net:
+    external: true
+volumes:
+  vnr202_data:
