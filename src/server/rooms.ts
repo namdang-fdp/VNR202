@@ -3,6 +3,7 @@
 // - Nếu có UPSTASH_REDIS_REST_URL và UPSTASH_REDIS_REST_TOKEN (hoặc KV_REST_API_URL và KV_REST_API_TOKEN do tích hợp
 //   Upstash trên Vercel tạo ra): dùng Upstash Redis (khi đưa lên Vercel). Dữ liệu tự hết hạn.
 import "server-only";
+import { createClient } from "redis";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { MISSIONS, TOTAL, type MiniGame } from "@/game/story";
@@ -268,10 +269,60 @@ class RedisStore implements Store {
   }
 }
 
+class TCPRedisStore implements Store {
+  private client: ReturnType<typeof createClient>;
+  private ready: Promise<unknown> | null = null;
+  constructor(url: string) {
+    this.client = createClient({ url });
+    this.client.on("error", (error) => console.error("[vnr202] Redis:", error));
+  }
+  private async db() {
+    if (!this.ready) {
+      this.ready = this.client.connect().catch((error) => {
+        this.ready = null;
+        throw error;
+      });
+    }
+    await this.ready;
+    return this.client;
+  }
+  async createRoom(title: string) {
+    const db = await this.db();
+    for (let i = 0; i < 8; i++) {
+      const room: RoomMeta = { code: randomCode(), title, hostKey: crypto.randomUUID(), createdAt: Date.now(), status: "lobby" };
+      const ok = await db.set(`mn2:room:${room.code}`, JSON.stringify(room), { NX: true, EX: ROOM_TTL_SECONDS });
+      if (ok) return room;
+    }
+    throw new Error("Không tạo được mã phòng");
+  }
+  async getRoom(code: string) {
+    const raw = await (await this.db()).get(`mn2:room:${code}`);
+    return raw ? JSON.parse(raw) as RoomMeta : null;
+  }
+  async saveRoom(room: RoomMeta) {
+    await (await this.db()).set(`mn2:room:${room.code}`, JSON.stringify(room), { KEEPTTL: true });
+  }
+  async getPlayers(code: string) {
+    const raw = await (await this.db()).hVals(`mn2:players:${code}`);
+    return raw.map((value) => JSON.parse(value) as PlayerDoc);
+  }
+  async getPlayer(code: string, id: string) {
+    const raw = await (await this.db()).hGet(`mn2:players:${code}`, id);
+    return raw ? JSON.parse(raw) as PlayerDoc : null;
+  }
+  async savePlayer(code: string, p: PlayerDoc) {
+    const db = await this.db();
+    const key = `mn2:players:${code}`;
+    await db.hSet(key, p.id, JSON.stringify(p));
+    await db.expire(key, ROOM_TTL_SECONDS);
+  }
+}
+
+const TCP_REDIS_URL = process.env.REDIS_URL;
 const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
 const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
 
-export const store: Store = REDIS_URL && REDIS_TOKEN ? new RedisStore(REDIS_URL, REDIS_TOKEN) : new MemoryStore();
+export const store: Store = TCP_REDIS_URL ? new TCPRedisStore(TCP_REDIS_URL) : REDIS_URL && REDIS_TOKEN ? new RedisStore(REDIS_URL, REDIS_TOKEN) : new MemoryStore();
 
 /* ───────────────────────── Bảng xếp hạng ───────────────────────── */
 
