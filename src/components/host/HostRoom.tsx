@@ -55,7 +55,7 @@ export function HostRoom({ code, readOnly = false }: { code: string; readOnly?: 
       <header className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-2 px-4 pb-2 pt-3 sm:px-8 sm:pt-4">
         <div className="min-w-0 basis-full sm:flex-1 sm:basis-auto">
           <Link href="/" className="label text-gold/85 hover:text-gold">
-            Mạch Ngầm<span className="hidden sm:inline"> · Hồ sơ mật 1930–1935</span>
+            Chiến Sĩ Giao Liên<span className="hidden sm:inline"> · Hồ sơ mật 1930–1935</span>
           </Link>
           <h1 className="truncate font-head text-[24px] font-bold uppercase leading-tight tracking-wide text-cream sm:text-[38px]">{room.title}</h1>
         </div>

@@ -53,7 +53,7 @@ export default function HostPage() {
         <div className="flex items-start justify-between gap-3 border-b-2 border-ink/80 pb-2">
           <div>
             <Link href="/" className="label text-ink-2 hover:text-ink">
-              Mạch Ngầm · Dành cho chủ phòng
+              Chiến Sĩ Giao Liên · Dành cho chủ phòng
             </Link>
             <h1 className="font-head text-[30px] font-bold uppercase leading-tight tracking-wide text-ink">Tạo phòng cho lớp</h1>
           </div>

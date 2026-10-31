@@ -34,7 +34,7 @@ export const Poster = forwardRef<HTMLDivElement, { name: string; t: Tally }>(fun
             </h1>
           </div>
           <div className="mt-1 rotate-6 border-[3px] px-3 py-1 font-head text-[16px] font-bold uppercase tracking-[0.15em]" style={{ borderColor: "#b3261e", color: "#b3261e" }}>
-            Mạch Ngầm
+            Chiến Sĩ Giao Liên
           </div>
         </div>
         <div className="mt-5 flex flex-wrap gap-x-8 gap-y-1 border-y-2 border-[#1f1a14] py-2.5 font-type text-[15px]">

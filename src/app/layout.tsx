@@ -12,7 +12,7 @@ const type = Cousine({ variable: "--font-type", subsets: ["vietnamese", "latin"]
 const text = Literata({ variable: "--font-text", subsets: ["vietnamese", "latin"], style: ["normal", "italic"] });
 
 export const metadata: Metadata = {
-  title: "Mạch Ngầm · Hồ sơ mật 1930–1935",
+  title: "Chiến Sĩ Giao Liên · Hồ sơ mật 1930–1935",
   description:
     "Trò chơi lịch sử: vào vai một giao liên của Đảng, giữ vững đường dây bí mật qua cao trào 1930–1931, những năm khủng bố trắng, tới Đại hội đại biểu lần thứ nhất của Đảng (3/1935).",
 };

@@ -43,8 +43,8 @@ export default function Landing() {
               </Stamp>
             </div>
             {/* Hai dòng tách riêng, chừa khoảng cho dấu chấm dưới chữ Ạ và dấu mũ, dấu huyền trên chữ Ầ khỏi chạm nhau. */}
-            <h1 className="inked mt-1 font-head text-[clamp(2.6rem,11.5vw,7rem)] font-bold uppercase leading-[0.98] tracking-[0.02em] text-ink sm:mt-2">
-              <span className="block">Mạch</span> <span className="mt-[0.26em] block">Ngầm</span>
+            <h1 className="inked mt-1 font-head text-[clamp(2.1rem,9vw,5.5rem)] font-bold uppercase leading-[0.98] tracking-[0.02em] text-ink sm:mt-2">
+              <span className="block">Chiến Sĩ</span> <span className="mt-[0.26em] block">Giao Liên</span>
             </h1>
             <div className="mt-2 flex items-center gap-3">
               <span className="h-[3px] w-10 bg-party" />

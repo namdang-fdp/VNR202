@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import BoardClient from "./BoardClient";
 
-export const metadata: Metadata = { title: "Bảng xếp hạng · Mạch Ngầm" };
+export const metadata: Metadata = { title: "Bảng xếp hạng · Chiến Sĩ Giao Liên" };
 
 export default function BoardPage() {
   return (

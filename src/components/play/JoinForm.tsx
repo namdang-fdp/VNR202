@@ -43,7 +43,7 @@ export function JoinForm({ initialRoom, focusRoom = false, onJoin }: { initialRo
         <div className="flex items-start justify-between gap-3 border-b-2 border-ink/80 pb-2">
           <div>
             <Link href="/" className="label text-ink-2 hover:text-ink">
-              Mạch Ngầm · 1930–1935
+              Chiến Sĩ Giao Liên · 1930–1935
             </Link>
             <h1 className="font-head text-[28px] font-bold uppercase leading-tight tracking-wide text-ink">Giấy thông hành</h1>
           </div>
